@@ -1,14 +1,15 @@
-CREATE TABLE "account" (
+CREATE TABLE "accounts" (
   "id" bigserial PRIMARY KEY,
   "owner" varchar NOT NULL,
-  "balance" decimal NOT NULL,
+  "currency" varchar NOT NULL,
+  "balance" integer NOT NULL,
   "created_at" timestamptz DEFAULT 'now()'
 );
 
 CREATE TABLE "entries" (
   "id" integer PRIMARY KEY,
   "account_id" bigint,
-  "amount" decimal NOT NULL,
+  "amount" integer NOT NULL,
   "created_at" timestamptz DEFAULT 'now()'
 );
 
@@ -16,11 +17,11 @@ CREATE TABLE "transfers" (
   "id" integer PRIMARY KEY,
   "from_account_id" bigint,
   "to_account_id" bigint,
-  "amount" decimal NOT NULL,
+  "amount" integer NOT NULL,
   "created_at" timestamptz DEFAULT 'now()'
 );
 
-CREATE INDEX ON "account" ("owner");
+CREATE INDEX ON "accounts" ("owner");
 
 CREATE INDEX ON "entries" ("account_id");
 
@@ -34,8 +35,8 @@ COMMENT ON COLUMN "entries"."amount" IS 'can be negative';
 
 COMMENT ON COLUMN "transfers"."amount" IS 'must be positive';
 
-ALTER TABLE "entries" ADD FOREIGN KEY ("account_id") REFERENCES "account" ("id");
+ALTER TABLE "entries" ADD FOREIGN KEY ("account_id") REFERENCES "accounts" ("id");
 
-ALTER TABLE "transfers" ADD FOREIGN KEY ("from_account_id") REFERENCES "account" ("id");
+ALTER TABLE "transfers" ADD FOREIGN KEY ("from_account_id") REFERENCES "accounts" ("id");
 
-ALTER TABLE "transfers" ADD FOREIGN KEY ("to_account_id") REFERENCES "account" ("id");
+ALTER TABLE "transfers" ADD FOREIGN KEY ("to_account_id") REFERENCES "accounts" ("id");

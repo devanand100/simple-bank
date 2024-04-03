@@ -9,4 +9,8 @@ migrateup:
 migratedown:
 	migrate -path db/migrations -database "postgresql://postgres:123456@localhost:8000/simple-bank?sslmode=disable" --verbose down
 migrationcreate:
-	migrate create -ext sql -dir db/migrations -seq init_schema 
+	migrate create -ext sql -dir db/migrations -seq init_schema
+sqlc:
+	sqlc generate
+test:
+	go test -v -cover ./...
