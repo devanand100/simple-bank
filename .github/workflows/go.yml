@@ -46,7 +46,7 @@ jobs:
 
     - name: InstallMigrate
       run: |
-        curl -L https://downloads.sqlc.dev/sqlc_1.26.0_linux_amd64.tar.gz | tar -xvz
+        curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.0/migrate.linux-386.deb | tar -xvz
         sudo mv migrate /usr/bin
         which migrate
 
