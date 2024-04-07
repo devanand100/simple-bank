@@ -7,14 +7,14 @@ CREATE TABLE "accounts" (
 );
 
 CREATE TABLE "entries" (
-  "id" integer PRIMARY KEY,
+  "id" bigserial  PRIMARY KEY,
   "account_id" bigint,
   "amount" integer NOT NULL,
   "created_at" timestamptz DEFAULT 'now()'
 );
 
 CREATE TABLE "transfers" (
-  "id" integer PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "from_account_id" bigint,
   "to_account_id" bigint,
   "amount" integer NOT NULL,

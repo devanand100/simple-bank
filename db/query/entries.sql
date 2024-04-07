@@ -14,6 +14,6 @@ LIMIT $1
 OFFSET $2 ;
 
 
--- name: GetEntry :many
+-- name: GetEntry :one
 SELECT * FROM entries 
 WHERE id = $1;

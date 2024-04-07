@@ -17,7 +17,7 @@ type Account struct {
 }
 
 type Entry struct {
-	ID        int32
+	ID        int64
 	AccountID pgtype.Int8
 	// can be negative
 	Amount    int32
@@ -25,7 +25,7 @@ type Entry struct {
 }
 
 type Transfer struct {
-	ID            int32
+	ID            int64
 	FromAccountID pgtype.Int8
 	ToAccountID   pgtype.Int8
 	// must be positive

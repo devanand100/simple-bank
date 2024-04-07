@@ -21,3 +21,9 @@ SELECT * FROM accounts
 ORDER BY owner
 LIMIT $1 
 OFFSET $2 ;
+
+-- name: AddAmountToAccount :one
+UPDATE accounts
+  SET balance =  balance + sqlc.arg(amount)
+WHERE id = sqlc.arg(id)
+RETURNING *;
