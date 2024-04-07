@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"simple-bank/util"
 	"testing"
@@ -27,15 +26,10 @@ func TestTransferTx(t *testing.T) {
 
 	var amount int32 = int32(util.RandomInt(0, 10))
 	result, err := store.TransferTx(context.Background(), transferTxParams{FromAccountId: int64(account1.ID), ToAccountId: int64(account2.ID), Amount: amount})
-	fmt.Println("result............", result)
-	fmt.Println("result............", result.Transfer)
-	fmt.Println("result............", result.FromEntry)
-	fmt.Println("result............", result.ToEntry)
-	fmt.Println("err............", err)
 	assert.NoError(t, err)
 	assert.Equal(t, result.FromEntry.Amount, -amount)
 	assert.Equal(t, result.ToEntry.Amount, amount)
-	assert.Equal(t, result.Transfer.FromAccountID, account1.ID)
-	assert.Equal(t, result.Transfer.ToAccountID, account2.ID)
+	assert.Equal(t, result.Transfer.FromAccountID.Int64, account1.ID)
+	assert.Equal(t, result.Transfer.ToAccountID.Int64, account2.ID)
 
 }

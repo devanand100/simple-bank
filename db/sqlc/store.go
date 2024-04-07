@@ -63,17 +63,18 @@ func (s *Store) TransferTx(ctx context.Context, arg transferTxParams) (result tr
 	err = s.execTx(ctx, func(q *Queries) error {
 		var err error
 		result.Transfer, err = q.CreateTransfer(ctx, CreateTransferParams{
-			FromAccountID: pgtype.Int8{Int64: arg.FromAccountId},
-			ToAccountID:   pgtype.Int8{Int64: arg.ToAccountId},
+			FromAccountID: pgtype.Int8{Int64: arg.FromAccountId, Valid: true},
+			ToAccountID:   pgtype.Int8{Int64: arg.ToAccountId, Valid: true},
 			Amount:        int32(arg.Amount),
 		})
+
 		if err != nil {
 			fmt.Println("1")
 			return err
 		}
 
 		result.FromEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: pgtype.Int8{Int64: arg.FromAccountId},
+			AccountID: pgtype.Int8{Int64: arg.FromAccountId, Valid: true},
 			Amount:    -arg.Amount,
 		})
 
@@ -84,7 +85,7 @@ func (s *Store) TransferTx(ctx context.Context, arg transferTxParams) (result tr
 		}
 
 		result.ToEntry, err = q.CreateEntry(ctx, CreateEntryParams{
-			AccountID: pgtype.Int8{Int64: arg.ToAccountId},
+			AccountID: pgtype.Int8{Int64: arg.ToAccountId, Valid: true},
 			Amount:    arg.Amount,
 		})
 
